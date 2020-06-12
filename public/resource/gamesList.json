@@ -1,0 +1,43 @@
+[
+	{
+		"sort":"编辑推荐",
+		"gameid": 1,
+		"gameImg": "/img/xiyang.jpg",
+		"gameIcon":"/img/xiyangicon.png",
+		"gameTitle":"夕阳热气球",
+		"gameIntroduce":"一款努力【骗氪不逼氪】的弹射",
+		"score":"8.6",
+		"scoreNumber":"3866人评分"
+	},
+	{
+		"sort":"编辑推荐",
+		"gameid": 2,
+		"gameImg": "/img/nextsword.jpg",
+		"gameIcon":"/img/nextswordicon.png",
+		"gameTitle":"下一把剑",
+		"gameIntroduce":"2048+RPG爽快冒险，不思议迷宫联动",
+		"score":"8.9",
+		"scoreNumber":"9468人评分"
+	},
+	{
+		"sort":"编辑推荐",
+		"gameid": 3,
+		"gameImg": "/img/load.jpeg",
+		"gameIcon":"/img/loadicon.png",
+		"gameTitle":"异地之旅",
+		"gameIntroduce":"克苏鲁风Roguelike，凭战斗保持理智",
+		"score":"6.9",
+		"scoreNumber":"7051人评分"
+	},
+	{
+		"sort":"来自广告",
+		"gameid": 4,
+		"gameImg": "/img/ymjh.jpg",
+		"gameIcon":"/img/ymjhicon.png",
+		"gameTitle":"一梦江湖",
+		"gameIntroduce":"全新辽阔塞北地图，奏响雪山与草原之歌",
+		"score":"7.2",
+		"scoreNumber":"48325人评分"
+	}
+]
+	
