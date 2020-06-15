@@ -11,87 +11,39 @@
       </div>
     </div>
     <div class="content">
-        <router-view></router-view>
+      <keep-alive>
+        <router-view v-if="$route.meta.keep"></router-view>
+      </keep-alive>
+      <router-view v-if="!$route.meta.keep"></router-view>
+        <!-- <component :is="myComponent"></component> -->
+        <!-- <component :is="myComponent"></component> -->
     </div>
-    <div class="nav">
-      <div class="nav_icon" v-for="(item, index) in nav_icon" v-bind:key="item.id" @click="tooglePage(index)">
-        <img v-bind:src="item.active ? item.icon_active : item.icon" alt="">
-        <p>{{item.icon_msg}}</p>
-      </div>
-    </div>
+    <Nav></Nav>
   </div>
 </template>
 
 <script>
+import Nav from '@/components/home/Nav.vue'
+// import Main from '../components/Main.vue'
+// import Find from '../components/Find.vue'
+// import Forum from '../components/Forum.vue'
+// import Order from '../components/Order.vue'
+// import Mine from '../components/Mine.vue'
 // @ is an alias to /src
-
 export default {
   name: 'Home',
-  data () {
-    return {
-      currentIndex: 0,
-      nav_icon: [
-        {
-          id: 1,
-          icon: 'images/main.png',
-          icon_active: 'images/main1.png',
-          icon_msg: '首页',
-          active: true,
-          router: '/main'
-        },
-        {
-          id: 2,
-          icon: 'images/find.png',
-          icon_active: 'images/find1.png',
-          icon_msg: '发现',
-          active: false,
-          router: '/find'
-        },
-        {
-          id: 3,
-          icon: 'images/forum.png',
-          icon_active: 'images/forum1.png',
-          icon_msg: '论坛',
-          active: false,
-          router: '/forum'
-        },
-        {
-          id: 4,
-          icon: 'images/order.png',
-          icon_active: 'images/order1.png',
-          icon_msg: '排行',
-          active: false,
-          router: '/order'
-        },
-        {
-          id: 5,
-          icon: 'images/mine.png',
-          icon_active: 'images/mine1.png',
-          icon_msg: '我的游戏',
-          active: false,
-          router: '/mine'
-        }
-      ]
-    }
-  },
-  created () {
-    // console.log(this.$router.history.current.path !== '/main')
-    if (this.$router.history.current.path !== '/maingames') {
-      this.$router.push(this.nav_icon[this.currentIndex].router)
-    }
+  computed: {
+    // myComponent () {
+    //   return this.$store.state.myComponent
+    // }
   },
   components: {
-  },
-  methods: {
-    tooglePage (index) {
-      if (this.currentIndex !== index) {
-        this.nav_icon[this.currentIndex].active = false
-        this.nav_icon[index].active = true
-        this.currentIndex = index
-        this.$router.push(this.nav_icon[index].router)
-      }
-    }
+    Nav
+    // Main, Find, Forum, Order, Mine
   }
+  // deactivated () {
+  //   window.localStorage.setItem('top', 100)
+  // }
 }
 </script>
 <style lang="less">
@@ -150,30 +102,5 @@ export default {
   .content {
     margin-top: 40px;
     margin-bottom: 60px;
-  }
-  .nav {
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    border-top: 1px solid #eeeeee;
-    padding-top: 8px;
-    background-color: white;
-    z-index: 999;
-    box-shadow: 0px -1px 2px #888888;
-    .nav_icon {
-      display: inline;
-      width: 20%;
-      float: left;
-      height: 50px;
-      text-align: center;
-      img {
-        width: 25px;
-        height: 25px;
-      }
-      p{
-        font-size: 12px;
-        color: #bfbfbf;
-      }
-    }
   }
 </style>

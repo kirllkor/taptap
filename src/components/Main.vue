@@ -4,7 +4,10 @@
       <span :class="{ active: !current }" @click="toogleTab(0)">游戏</span>
       <span :class="{ active: current }" @click="toogleTab(1)">视频</span>
     </div>
-      <router-view></router-view>
+    <keep-alive>
+      <router-view v-if="$route.meta.keep"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keep"></router-view>
   </div>
 </template>
 
@@ -12,19 +15,23 @@
 export default {
   data () {
     return {
-      // 当前选项卡
-      current: 0,
       router: [
         { path: '/maingames' },
         { path: '/mainvideo' }
       ]
     }
   },
+  computed: {
+    // 当前选项卡
+    current () {
+      return this.$store.state.mainCurrent
+    }
+  },
   methods: {
     toogleTab (index) {
       if (this.current !== index) {
-        this.current = index
-        this.$router.push(this.router[this.current].path)
+        this.$router.push(this.router[index].path)
+        console.log(this.current)
       }
     }
   }

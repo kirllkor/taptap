@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+// 导入vuex
+import store from '../store/index.js'
 import Home from '../views/Home.vue'
 import Main from '../components/Main.vue'
 import Order from '../components/Order.vue'
@@ -8,6 +10,7 @@ import Forum from '../components/Forum.vue'
 import Mine from '../components/Mine.vue'
 import MainGames from '../components/main/MainGames.vue'
 import MainVideo from '../components/main/MainVideo.vue'
+import GameInfo from '../views/GameInfo.vue'
 
 Vue.use(VueRouter)
 
@@ -17,46 +20,78 @@ const routes = [
     redirect: '/main',
     name: 'Home',
     component: Home,
+    meta: {
+      keep: true
+    },
     children: [
       {
         path: '/main',
         redirect: '/maingames',
         name: 'Main',
         component: Main,
+        meta: {
+          keep: true
+        },
         children: [
           {
             path: '/maingames',
             name: 'MainGames',
-            component: MainGames
+            component: MainGames,
+            meta: {
+              keep: true
+            }
           },
           {
             path: '/mainvideo',
             name: 'MainVideo',
-            component: MainVideo
+            component: MainVideo,
+            meta: {
+              keep: true
+            }
           }
         ]
       },
       {
         path: '/find',
         name: 'Find',
-        component: Find
+        component: Find,
+        meta: {
+          keep: true
+        }
       },
       {
         path: '/order',
         name: 'Order',
-        component: Order
+        component: Order,
+        meta: {
+          keep: true
+        }
       },
       {
         path: '/forum',
         name: 'Forum',
-        component: Forum
+        component: Forum,
+        meta: {
+          keep: true
+        }
       },
       {
         path: '/mine',
         name: 'Mine',
-        component: Mine
+        component: Mine,
+        meta: {
+          keep: true
+        }
       }
     ]
+  },
+  {
+    path: '/gameinfo/:id',
+    name: 'GameInfo',
+    component: GameInfo,
+    meta: {
+      keep: false
+    }
   },
   {
     path: '/about',
@@ -70,7 +105,48 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  routes
+  routes,
+  // 切换路由,回到顶部
+  scrollBehavior (to, from, savedPosition) {
+    if (/^\/gameinfo\/[0-9]+/.test(to.path)) {
+      return { x: 0, y: 0 }
+    }
+  }
 })
+
+// 设置路由守卫,绑定路由与选项卡的current值
+router.beforeEach((to, from, next) => {
+  if (to.path === '/maingames') {
+    store.commit('changePage', 0)
+    store.commit('changeMainCurrent', 0)
+    next()
+    console.log('切换成功')
+  } else if (to.path === '/mainvideo') {
+    store.commit('changeMainCurrent', 1)
+    next()
+  } else if (to.path === '/find') {
+    store.commit('changePage', 1)
+    next()
+  } else if (to.path === '/forum') {
+    store.commit('changePage', 2)
+    next()
+  } else if (to.path === '/order') {
+    store.commit('changePage', 3)
+    next()
+  } else if (to.path === '/mine') {
+    store.commit('changePage', 4)
+    next()
+  } else {
+    next()
+  }
+})
+
+// 路由跳转后的钩子函数
+// router.afterEach((to, from) => {
+//   if (to.path === '/maingames') {
+//     document.documentElement.scrollTop = store.state.mainGamesTop
+//     console.log('切换成功')
+//   }
+// })
 
 export default router

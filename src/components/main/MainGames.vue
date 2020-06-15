@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="hot" :style="{ backgroundImage: 'url(' + hotData.gameImg + ')' }">
+    <div class="hot" :style="{ backgroundImage: 'url(' + hotData.gameImg + ')' }" @click="showGameInfo(hotData.gameid)">
       <p>{{hotData.sort}}</p>
       <p class="hot_title">{{hotData.update}}</p>
       <!-- 把底部数据组件抽离出去 -->
@@ -32,9 +32,21 @@ export default {
       gamesList: []
     }
   },
+  computed: {
+    top () {
+      return this.$store.state.mainGamesTop
+    }
+  },
   created () {
     this.getHotData()
     this.getGamesList()
+    // console.log(this.$route)
+  },
+  mounted () {
+  },
+  // keep-alive的钩子函数，设置滚动条的高度
+  activated () {
+    document.documentElement.scrollTop = this.top
   },
   methods: {
     // 获取热门游戏数据
@@ -46,8 +58,19 @@ export default {
     async getGamesList () {
       const { data: res } = await this.$http.get('../resource/gamesList.json')
       this.gamesList = res
-      console.log(this.gamesList)
+      // console.log(this.gamesList)
+    },
+    // 跳转到详细页面
+    showGameInfo (id) {
+      this.tik++
+      this.$router.push(`/gameinfo/${id}`)
     }
+  },
+  // 离开路由生命周期函数,把当前滚动条高度添加到vuex中
+  beforeRouteLeave (to, from, next) {
+    this.$store.commit('changeMainGamesTop', document.documentElement.scrollTop)
+    // console.log(this.top)
+    next()
   },
   // 注册组件
   components: {
@@ -84,48 +107,6 @@ export default {
         margin-top: 5px;
       }
     }
-    // .hot_bottom {
-    //   box-sizing: border-box;
-    //   position: absolute;
-    //   display: flex;
-    //   justify-content: space-between;
-    //   width: 100%;
-    //   height: 50px;
-    //   padding-left: 10px;
-    //   padding-right: 10px;
-    //   bottom: 5px;
-    //   // background-color: antiquewhite;
-    //   .icon {
-    //     position: relative;
-    //     width: 50px;
-    //     height: 50px;
-    //     z-index: 1;
-    //   }
-    //   .introduce {
-    //     width: 55%;
-    //     .introduce_title {
-    //       font-size: 20px;
-    //       font-weight: bold;
-    //       line-height: 30px;
-    //     }
-    //     .introduce_text {
-    //       overflow: hidden;
-    //       white-space: nowrap;
-    //       text-overflow: ellipsis;
-    //       line-height: 20px;
-    //     }
-    //   }
-    //   .evaluate {
-    //     width: 85px;
-    //     .score {
-    //       font-size: 16px;
-    //       line-height: 30px;
-    //     }
-    //     p {
-    //       line-height: 20px;
-    //     }
-    //   }
-    // }
     .bgImg {
       position: absolute;
       top: 0;

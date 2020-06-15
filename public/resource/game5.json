@@ -1,4 +1,5 @@
 {
+	"name": "benghuai3",
 	"sort":"编辑推荐",
 	"gameid": 5,
 	"firm":"miHoYo",
@@ -7,10 +8,15 @@
 	"download":11678500,
 	"attention":3515461,
 	"update": "“海渊迷影”更新",
-	"gameImg": "/games/benghuai3.jpg",
-	"gameIcon":"/games/benghuai3icon.png",
+	"gameImg": "/img/benghuai3.jpg",
+	"gameIcon":"/img/benghuai3icon.png",
 	"gameTitle":"崩坏3",
 	"gameIntroduce":"全新开放世界「后崩坏书」开启！一起来探索“重生之城”圣方丹的秘密吧！",
 	"score":"7.4",
-	"scoreNumber":"97888人评分"
+	"scoreNumber":"97888人评分",
+	"evaluate": 97888,
+	"community": 20222,
+	"screenshot": 3887,
+	"vedio": 2755,
+	"introduction": "【朔夜观星 新女武神参战】\n全新SP女武神「朔夜观星」登场，角色主题活动「星与你消失之日」同步开放！\n主线第17章剧情更新，参与探索，即可获取活动套装圣痕、精准补给卡等奖励！\n【次世代动作手游出击】\n3D全视角卡通渲染、无限可能的分支连招、主机游戏的超强打击感，带来无限沉浸的关卡剧情及战斗体验！\n加入《崩坏3》，与女武神并肩作战吧！\n休伯利安号迎接舰长登舰，启航！"
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="root">
+    <div class="root" @click="showGameInfo(gameData.gameid)">
       <p>{{gameData.sort}}</p>
       <div class="bgImg">
         <img :src="gameData.gameImg" alt="">
@@ -20,6 +20,11 @@ export default {
   },
   components: {
     Bottom
+  },
+  methods: {
+    showGameInfo (id) {
+      this.$router.push(`/gameinfo/${id}`)
+    }
   }
 }
 </script>
@@ -30,7 +35,7 @@ export default {
     padding-left: 5%;
     padding-right: 5%;
     margin-bottom: 5px;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #D0D0D0;
     p {
       font-size: 10px;
       color: darkgray;

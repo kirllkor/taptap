@@ -60,6 +60,7 @@ export default {
       .score {
         font-size: 16px;
         line-height: 30px;
+        font-weight: bold;
       }
       p {
         line-height: 20px;
