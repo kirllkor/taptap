@@ -80,20 +80,87 @@
         <div class="alt">轻点发布我的评价</div>
       </div>
     </div>
+    <div class="player_eva">
+      <p>玩家评价</p>
+      <div class="player_item" v-for="item in evaluate" :key="item.id">
+        <div>
+          <!-- 头像 -->
+          <img class="player_icon" src="/images/1494.png" alt="">
+          <div class="player_name">
+            <!-- 用户名 -->
+            <p>{{item.userName}}</p>
+            <!-- 评论时间 -->
+            <p class="eva_time">4tianqian</p>
+          </div>
+        </div>
+        <!-- 评分和游戏时长 -->
+        <div>
+          <span class="start">
+            <i :class="{choose: item.start >= 1}"></i>
+            <i :class="{choose: item.start >= 2}"></i>
+            <i :class="{choose: item.start >= 3}"></i>
+            <i :class="{choose: item.start >= 4}"></i>
+            <i :class="{choose: item.start >= 5}"></i>
+          </span>
+          <!-- 游戏时长 -->
+          <span class="game_time">游戏时长 {{item.time}}</span>
+        </div>
+        <!-- 评论 -->
+        <div class="eva_text">
+          <p>{{item.evaluate}}</p>
+        </div>
+        <!-- 点赞评论信息 -->
+        <div class="eva_msg">
+          <span>来自OPPO A5</span>
+          <span>{{item.talk | initNum}}</span>
+          <i class="talk"></i>
+          <span>{{item.stamp | initNum}}</span>
+          <i class="stamp"></i>
+          <span>{{item.support | initNum}}</span>
+          <i class="support"></i>
+          <span>{{item.fun | initNum}}</span>
+          <i class="fun"></i>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    gameData: Object,
+    gameName: String
+  },
   data () {
     return {
-      start: 0
+      start: 0,
+      evaluate: []
     }
   },
   methods: {
     grade (score) {
       this.start = score
-      console.log(score)
+    },
+    // 获取评论数据
+    getEvaluate () {
+      this.$http.get(`../resource/${this.gameName}Evaluate.json`).then(res => {
+        this.evaluate = res.data
+      })
+    }
+  },
+  created () {
+    // console.log(this.gameData)
+    this.getEvaluate()
+    // console.log(this.evaluate)
+  },
+  filters: {
+    initNum (val) {
+      if (val === 0) {
+        return ''
+      } else {
+        return val
+      }
     }
   }
 }
@@ -223,6 +290,109 @@ export default {
       font-size: 12px;
       font-weight: 200;
       color: #ADADAD;
+    }
+  }
+  .player_eva {
+    padding-top: 20px;
+    p {
+      font-weight: bold;
+    }
+    .player_item {
+      margin-top: 10px;
+      padding: 10px 10px;
+      background-color: #F0F0F0;
+      border-radius: 5px;
+      .player_icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        vertical-align: middle;
+      }
+      .player_name {
+        display: inline-block;
+        margin-left: 10px;
+        vertical-align: middle;
+        p {
+          font-size: 15px;
+        }
+        .eva_time {
+          font-size: 12px;
+          font-weight: 200;
+          color: #BEBEBE;
+        }
+      }
+      span {
+        vertical-align: middle;
+      }
+      // 评分
+      .start {
+        margin-right: 5px;
+        i {
+          margin-right: 2px;
+          display: inline-block;
+          width: 12px;
+          height: 12px;
+          background-image: url(/images/start.png);
+          background-size: cover;
+          &.choose {
+            background-image: url(/images/start1.png);
+          }
+        }
+      }
+      // 游戏时长
+      .game_time {
+        font-size: 12px;
+        color: #BEBEBE;
+        line-height: 20px;
+      }
+      .eva_text {
+        padding: 10px 0;
+        p {
+          font-size: 14px;
+          color: #8E8E8E;
+          font-weight: 400;
+        }
+      }
+      .eva_msg {
+        font-size: 0;
+        & :first-child{
+          float: none;
+          margin: 0;
+        }
+        i, span {
+          font-size: 14px;
+          float: right;
+          vertical-align: middle;
+          color: #8E8E8E;
+        }
+        &:after {
+          content: '';
+          display: block;
+          clear: both;
+        }
+        span {
+          margin-left: 5px;
+        }
+        i {
+          display: inline-block;
+          height: 15px;
+          width: 15px;
+          margin-left: 20px;
+          background-size: cover;
+        }
+        .talk {
+          background-image: url(/font/talk.png);
+        }
+        .stamp {
+          background-image: url(/font/stamp.png);
+        }
+        .support {
+          background-image: url(/font/support.png);
+        }
+        .fun {
+          background-image: url(/font/fun.png);
+        }
+      }
     }
   }
 }

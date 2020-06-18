@@ -1,7 +1,7 @@
 <template>
   <div style="position: relative;">
     <!-- 返回按钮 -->
-    <div class="back"><i @click="back"></i></div>
+    <div :class="scrollTop > 60 ? 'back-fixed' : 'back'"><i @click="back"></i></div>
     <img :src="gameData.gameImg" alt="" class="gameImg">
     <!-- 游戏的简单信息 -->
     <div class="game_top">
@@ -48,7 +48,7 @@
       <div :class="{details_active: this.current === 2}" @click="toggleTab(2)">社区<span>{{gameData.community | shortHand}}</span></div>
     </div>
     <keep-alive>
-      <component :is="tabCom" :gameData="gameData"></component>
+      <component :is="tabCom" :gameData="gameData" :gameName="gameData.name" @toggleTab="toggleCom"></component>
     </keep-alive>
   </div>
 </template>
@@ -61,17 +61,20 @@ export default {
   name: 'GameInfo',
   data () {
     return {
-      id: this.$route.params.id,
+      gameInfoId: this.$route.params.id,
       gameData: {},
       current: 0,
-      tabCom: 'Detail'
+      // 选择子组件
+      tabCom: 'Detail',
+      // 用来监听back箭头
+      scrollTop: 0
     }
   },
   methods: {
     // 通过路由的参数,获取id值后发送请求
     async getGameData () {
       // console.log(this.$route)
-      const { data: res } = await this.$http.get(`../resource/game${this.id}.json`)
+      const { data: res } = await this.$http.get(`../resource/game${this.gameInfoId}.json`)
       this.gameData = res
       // console.log(this.gameData)
     },
@@ -91,14 +94,54 @@ export default {
         this.current = current
         this.tabCom = 'Community'
       }
+    },
+    // 监听子组件传递的参数,触发的函数
+    toggleCom (val) {
+      this.tabCom = val
+      this.current = 1
+      document.documentElement.scrollTop = 345
     }
   },
   created () {
     this.getGameData()
   },
+  mounted () {
+    console.log(this)
+    window.onscroll = () => {
+      this.scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+    }
+    document.documentElement.scrollTop = 0
+  },
   filters: {
     shortHand (val) {
       return val >= 10000 ? Math.floor(val / 10000) + '万+' : val
+    }
+  },
+  // 路由离开之前触发
+  beforeRouteLeave (to, from, next) {
+    if (to.path.indexOf('/screenshot') !== -1 || to.path.indexOf('/vedio') !== -1) {
+      // from.meta.keep = true
+      from.meta.y = this.scrollTop
+      // 当离开路由并且前往一级页面时,清除缓存
+    } else if (to.path === '/maingames') {
+      // 清除keep-alive缓存
+      const vnode = this.$vnode
+      const parentVnode = vnode && vnode.parent
+      if (parentVnode && parentVnode.componentInstance && parentVnode.componentInstance.cache) {
+        this.$destroy()
+        const key = 'GameInfo'
+        const cache = parentVnode.componentInstance.cache
+        cache[key] = null
+      }
+      from.meta.y = 0
+    }
+    next()
+  },
+  // keep-alive的钩子函数,用来滚动位置
+  activated () {
+    document.documentElement.scrollTop = this.$route.meta.y
+    window.onscroll = () => {
+      this.scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
     }
   },
   components: {
@@ -120,6 +163,22 @@ export default {
       height: 40px;
       background-image: url(/font/arrow_left.png);
       background-size: cover;
+    }
+  }
+  .back-fixed {
+    position: fixed;
+    width: 100%;
+    background-color: #00CACA;
+    z-index: 9;
+    i {
+      position: relative;
+      left: 5px;
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background-image: url(/font/arrow_left.png);
+      background-size: cover;
+      vertical-align: middle;
     }
   }
   .gameImg {

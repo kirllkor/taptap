@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     currentIndex: 0,
     mainCurrent: 0,
-    mainGamesTop: 0
+    mainGamesTop: 0,
+    gameInfoId: 0
   },
   mutations: {
     changePage (state, index) {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     changeMainGamesTop (state, scrollTop) {
       state.mainGamesTop = scrollTop
+    },
+    changeGameInfoId (state, index) {
+      state.gameInfoId = index
     }
   },
   actions: {

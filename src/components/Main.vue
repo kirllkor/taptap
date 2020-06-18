@@ -18,7 +18,8 @@ export default {
       router: [
         { path: '/maingames' },
         { path: '/mainvideo' }
-      ]
+      ],
+      gameId: 0
     }
   },
   computed: {

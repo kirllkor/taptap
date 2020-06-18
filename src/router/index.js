@@ -11,6 +11,8 @@ import Mine from '../components/Mine.vue'
 import MainGames from '../components/main/MainGames.vue'
 import MainVideo from '../components/main/MainVideo.vue'
 import GameInfo from '../views/GameInfo.vue'
+import ScreenShot from '../views/gameinfo/ScreenShot.vue'
+import Vedio from '../views/gameinfo/Vedio.vue'
 
 Vue.use(VueRouter)
 
@@ -90,6 +92,32 @@ const routes = [
     name: 'GameInfo',
     component: GameInfo,
     meta: {
+      keep: true,
+      x: 0,
+      y: 0
+    }
+  },
+  {
+    path: '/screenshot',
+    name: 'ScreenShot',
+    component: ScreenShot,
+    props: {
+      id: 0,
+      name: ''
+    },
+    meta: {
+      keep: false
+    }
+  },
+  {
+    path: '/vedio',
+    name: 'Vedio',
+    component: Vedio,
+    props: {
+      id: 0,
+      name: ''
+    },
+    meta: {
       keep: false
     }
   },
@@ -108,7 +136,7 @@ const router = new VueRouter({
   routes,
   // 切换路由,回到顶部
   scrollBehavior (to, from, savedPosition) {
-    if (/^\/gameinfo\/[0-9]+/.test(to.path)) {
+    if (to.path.indexOf('/screenshot') !== -1) {
       return { x: 0, y: 0 }
     }
   }
@@ -120,7 +148,6 @@ router.beforeEach((to, from, next) => {
     store.commit('changePage', 0)
     store.commit('changeMainCurrent', 0)
     next()
-    console.log('切换成功')
   } else if (to.path === '/mainvideo') {
     store.commit('changeMainCurrent', 1)
     next()
@@ -136,6 +163,9 @@ router.beforeEach((to, from, next) => {
   } else if (to.path === '/mine') {
     store.commit('changePage', 4)
     next()
+  } else if (to.path.indexOf('/gameinfo') !== -1) {
+    console.log('进入gameinfo')
+    next()
   } else {
     next()
   }
@@ -143,8 +173,8 @@ router.beforeEach((to, from, next) => {
 
 // 路由跳转后的钩子函数
 // router.afterEach((to, from) => {
-//   if (to.path === '/maingames') {
-//     document.documentElement.scrollTop = store.state.mainGamesTop
+//   if (/^\/gameinfo\/[0-9]+/.test(to.path)) {
+//     window.scrollTo(0, to.meta.y)
 //     console.log('切换成功')
 //   }
 // })

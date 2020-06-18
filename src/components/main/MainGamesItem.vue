@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="root" @click="showGameInfo(gameData.gameid)">
+    <slot></slot>
+    <div class="root" @click="showGameInfo(gameData.gameid)" :class="index === length - 1 ? 'no-border' : ''">
       <p>{{gameData.sort}}</p>
       <div class="bgImg">
         <img :src="gameData.gameImg" alt="">
@@ -16,7 +17,9 @@
 import Bottom from './Bottom.vue'
 export default {
   props: {
-    gameData: Object
+    gameData: Object,
+    index: Number,
+    length: Number
   },
   components: {
     Bottom
@@ -77,5 +80,8 @@ export default {
         }
       }
     }
+  }
+  .no-border {
+    border: none !important;
   }
 </style>

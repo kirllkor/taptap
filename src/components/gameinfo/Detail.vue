@@ -8,49 +8,49 @@
       <div v-html="introduction" class="detail_introdcuct"></div>
       <div class="screen_vedio_evaluate_title">
         <p>游戏截图</p>
-        <p class="all">全部&nbsp;{{gameData.screenshot}}</p>
+        <p class="all" @click="checkScreenShot($route.params.id)">全部&nbsp;{{gameData.screenshot}}</p>
       </div>
       <div class="screen_shot_img">
         <ul>
-          <li><img src="/img/benghuai3.jpg" alt=""></li>
-          <li><img src="/img/benghuai3.jpg" alt=""></li>
-          <li><img src="/img/benghuai3.jpg" alt=""></li>
-          <li><img src="/img/benghuai3.jpg" alt=""></li>
-          <li><img src="/img/benghuai3.jpg" alt=""></li>
+          <li><img :src="gameData.gameImg" alt=""></li>
+          <li><img :src="gameData.gameImg" alt=""></li>
+          <li><img :src="gameData.gameImg" alt=""></li>
+          <li><img :src="gameData.gameImg" alt=""></li>
+          <li><img :src="gameData.gameImg" alt=""></li>
         </ul>
       </div>
       <div class="screen_vedio_evaluate_title">
         <p>视频</p>
-        <p class="all">全部&nbsp;{{gameData.vedio}}</p>
+        <p class="all" @click="checkVedio($route.params.id)">全部&nbsp;{{gameData.vedio}}</p>
       </div>
       <div class="vedio">
         <ul class="vedio_ul">
           <li class="vedio_li">
-            <img src="/img/benghuai3.jpg" alt="">
+            <img :src="gameData.gameImg" alt="">
             <span>00:08</span>
             <p>风之女神</p>
             <p class="play">2天前 | 744播放</p>
           </li>
           <li class="vedio_li">
-            <img src="/img/benghuai3.jpg" alt="">
+            <img :src="gameData.gameImg" alt="">
             <span>00:08</span>
             <p>新服装情报|真红骑士·月蚀服装|即将登场即将登场</p>
             <p class="play">05-29 | 15555播放</p>
           </li>
           <li class="vedio_li">
-            <img src="/img/benghuai3.jpg" alt="">
+            <img :src="gameData.gameImg" alt="">
             <span>00:08</span>
             <p>新服装情报|真红骑士·月蚀服装|即将登场即将登场</p>
             <p class="play">05-29 | 15555播放</p>
           </li>
           <li class="vedio_li">
-            <img src="/img/benghuai3.jpg" alt="">
+            <img :src="gameData.gameImg" alt="">
             <span>00:08</span>
             <p>新服装情报|真红骑士·月蚀服装|即将登场即将登场</p>
             <p class="play">05-29 | 15555播放</p>
           </li>
           <li class="vedio_li">
-            <img src="/img/benghuai3.jpg" alt="">
+            <img :src="gameData.gameImg" alt="">
             <span>00:08</span>
             <p>新服装情报|真红骑士·月蚀服装|即将登场即将登场</p>
             <p class="play">05-29 | 15555播放</p>
@@ -59,7 +59,7 @@
       </div>
       <div class="screen_vedio_evaluate_title">
         <p>评价</p>
-        <p class="all">全部</p>
+        <p class="all" @click="checkAll">全部</p>
       </div>
       <div class="evaluate">
         <div class="evaluate_item" v-for="item in evaluate" :key="item.id">
@@ -81,7 +81,7 @@
             </div>
           </div>
         </div>
-        <div class="check_all">
+        <div class="check_all" @click="checkAll">
           <span>查看全部评论</span>
           <i></i>
         </div>
@@ -145,7 +145,8 @@
 export default {
   name: 'Detail',
   props: {
-    gameData: Object
+    gameData: Object,
+    gameName: String
   },
   data () {
     return {
@@ -167,12 +168,25 @@ export default {
       // 第二种办法,replace
       // console.log(str instanceof String)
       return typeof str === 'string' && str.replace(/\n/g, '<br/>')
+    },
+    // 查看全部评论
+    checkAll () {
+      this.$emit('toggleTab', 'Evaluate')
+    },
+    // 查看全部截图
+    checkScreenShot (id) {
+      // this.$route.meta.y = document.documentElement.scrollTop
+      this.$router.push({ path: '/screenshot', query: { id: this.gameData.gameid, name: this.gameName } })
+    },
+    // 查看全部视屏
+    checkVedio (id) {
+      this.$router.push({ path: '/vedio', query: { id: this.gameData.gameid, name: this.gameName } })
     }
   },
   watch: {
     async gameData () {
       this.introduction = this.stringWrap(this.gameData.introduction)
-      const { data: res } = await this.$http.get(`../resource/${this.gameData.name}Evaluate.json`)
+      const { data: res } = await this.$http.get(`../resource/evaluate/${this.gameData.name}Evaluate.json`)
       this.evaluate = res.splice(0, 4)
     }
   },

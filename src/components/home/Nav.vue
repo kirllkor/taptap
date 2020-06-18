@@ -91,7 +91,7 @@ export default {
     padding-top: 8px;
     background-color: white;
     z-index: 999;
-    box-shadow: 0px -1px 2px #888888;
+    box-shadow: 0px 0px 20px 0px #bfbfbf;
     .nav_icon {
       display: inline;
       width: 20%;

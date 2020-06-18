@@ -41,9 +41,6 @@ export default {
     Nav
     // Main, Find, Forum, Order, Mine
   }
-  // deactivated () {
-  //   window.localStorage.setItem('top', 100)
-  // }
 }
 </script>
 <style lang="less">
@@ -101,6 +98,6 @@ export default {
   }
   .content {
     margin-top: 40px;
-    margin-bottom: 60px;
+    margin-bottom: 80px;
   }
 </style>

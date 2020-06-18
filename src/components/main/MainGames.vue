@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="maingames">
     <div class="hot" :style="{ backgroundImage: 'url(' + hotData.gameImg + ')' }" @click="showGameInfo(hotData.gameid)">
       <p>{{hotData.sort}}</p>
       <p class="hot_title">{{hotData.update}}</p>
@@ -18,7 +18,7 @@
       <bottom :bottomData="hotData"></bottom>
       <div class="bgImg"></div>
     </div>
-    <main-games-item v-for="item in gamesList" :key="item.gameid" :gameData="item"></main-games-item>
+    <main-games-item v-for="(item, index) in gamesList" :key="item.gameid" :gameData="item" :index="index" :length="length"></main-games-item>
   </div>
 </template>
 
@@ -29,7 +29,8 @@ export default {
   data () {
     return {
       hotData: {},
-      gamesList: []
+      gamesList: [],
+      length: 0
     }
   },
   computed: {
@@ -58,11 +59,11 @@ export default {
     async getGamesList () {
       const { data: res } = await this.$http.get('../resource/gamesList.json')
       this.gamesList = res
+      this.length = this.gamesList.length
       // console.log(this.gamesList)
     },
     // 跳转到详细页面
     showGameInfo (id) {
-      this.tik++
       this.$router.push(`/gameinfo/${id}`)
     }
   },
