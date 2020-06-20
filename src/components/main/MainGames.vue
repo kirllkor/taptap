@@ -48,6 +48,7 @@ export default {
   // keep-alive的钩子函数，设置滚动条的高度
   activated () {
     document.documentElement.scrollTop = this.top
+    console.log('maingame', this)
   },
   methods: {
     // 获取热门游戏数据

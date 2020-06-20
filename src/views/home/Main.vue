@@ -50,13 +50,12 @@ export default {
     background-color: white;
     span {
       display: inline-block;
-      width: 100%;
       text-align: center;
       line-height: 30px;
     }
   }
   .active {
     color: #48D1CC;
-    border-bottom: 1px solid #48D1CC;
+    border-bottom: 3px solid #48D1CC;
   }
 </style>

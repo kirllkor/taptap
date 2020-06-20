@@ -144,7 +144,7 @@ export default {
     },
     // 获取评论数据
     getEvaluate () {
-      this.$http.get(`../resource/${this.gameName}Evaluate.json`).then(res => {
+      this.$http.get(`../resource/evaluate/${this.gameName}Evaluate.json`).then(res => {
         this.evaluate = res.data
       })
     }
@@ -184,7 +184,7 @@ export default {
         background-color: #00E3E3;
         border-radius: 50%;
         vertical-align: bottom;
-        background-image: url(/images/whitestart.png);
+        background-image: url(/font/whitestart.png);
         background-repeat: no-repeat;
         background-position: center;
       }
@@ -219,7 +219,7 @@ export default {
             width: 8px;
             height: 8px;
             margin-left: 3px;
-            background-image: url(/images/start.png);
+            background-image: url(/font/start.png);
             background-size: cover;
           }
         }
@@ -277,11 +277,11 @@ export default {
           display: inline-block;
           width: 20px;
           height: 20px;
-          background-image: url(/images/start.png);
+          background-image: url(/font/start.png);
           background-size: cover;
         }
         .choose_start {
-          background-image: url(/images/start1.png)
+          background-image: url(/font/start1.png)
         }
       }
     }
@@ -332,10 +332,10 @@ export default {
           display: inline-block;
           width: 12px;
           height: 12px;
-          background-image: url(/images/start.png);
+          background-image: url(/font/start.png);
           background-size: cover;
           &.choose {
-            background-image: url(/images/start1.png);
+            background-image: url(/font/start1.png);
           }
         }
       }

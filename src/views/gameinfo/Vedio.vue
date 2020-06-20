@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     async getVedioList () {
-      const { data: res } = await this.$http.get(`/resource/vedio/${this.gameName}vedio.json`)
+      const { data: res } = await this.$http.get(`/resource/vedio/${this.gameName}Vedio.json`)
       this.vedioList = res
     }
   },

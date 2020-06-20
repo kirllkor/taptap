@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="nav">
+    <nav class="nav">
       <div class="nav_icon" v-for="(item, index) in nav_icon" v-bind:key="item.id" @click="tooglePage(index)">
         <img v-bind:src="currentIndex === index ? item.icon_active : item.icon" alt="">
         <p>{{item.icon_msg}}</p>
       </div>
-    </div>
+    </nav>
   </div>
 </template>
 
@@ -65,14 +65,11 @@ export default {
   methods: {
     tooglePage (index) {
       if (this.currentIndex !== index) {
-        // this.$store.commit('changePage', index)
         this.$router.push(this.nav_icon[index].router)
       }
     }
   },
   created () {
-    // this.currentIndex = this.$store.currentIndex
-    // console.log(this.$store.currentIndex)
   },
   computed: {
     currentIndex () {

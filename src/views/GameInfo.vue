@@ -42,13 +42,13 @@
       </div>
     </div>
     <div class="black_line"></div>
-    <div class="details">
+    <nav class="details" :class="scrollTop >= 345 ? 'details-fixed' : ''">
       <div :class="{details_active: this.current === 0}" @click="toggleTab(0)">详情</div>
       <div :class="{details_active: this.current === 1}" @click="toggleTab(1)">评价<span>{{gameData.evaluate | shortHand}}</span></div>
       <div :class="{details_active: this.current === 2}" @click="toggleTab(2)">社区<span>{{gameData.community | shortHand}}</span></div>
-    </div>
+    </nav>
     <keep-alive>
-      <component :is="tabCom" :gameData="gameData" :gameName="gameData.name" @toggleTab="toggleCom"></component>
+      <component :is="tabCom" :gameData="gameData" :gameName="gameData.name" @toggleTab="toggleCom" :class="scrollTop >= 345 ? 'mt' : ''"></component>
     </keep-alive>
   </div>
 </template>
@@ -94,6 +94,10 @@ export default {
         this.current = current
         this.tabCom = 'Community'
       }
+      // 初始化该高度
+      if (this.scrollTop > 345) {
+        document.documentElement.scrollTop = 345
+      }
     },
     // 监听子组件传递的参数,触发的函数
     toggleCom (val) {
@@ -124,15 +128,7 @@ export default {
       from.meta.y = this.scrollTop
       // 当离开路由并且前往一级页面时,清除缓存
     } else if (to.path === '/maingames') {
-      // 清除keep-alive缓存
-      const vnode = this.$vnode
-      const parentVnode = vnode && vnode.parent
-      if (parentVnode && parentVnode.componentInstance && parentVnode.componentInstance.cache) {
-        this.$destroy()
-        const key = 'GameInfo'
-        const cache = parentVnode.componentInstance.cache
-        cache[key] = null
-      }
+      this.clearCache('GameInfo')
       from.meta.y = 0
     }
     next()
@@ -324,5 +320,15 @@ export default {
       color: #00CACA;
       border-bottom: 3px solid #00CACA;
     }
+  }
+  .details-fixed {
+    position: fixed;
+    top: 40px;
+    width: 100%;
+    background-color: white;
+    z-index: 999;
+  }
+  .mt {
+    margin-top: 35px;
   }
 </style>

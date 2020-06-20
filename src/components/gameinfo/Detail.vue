@@ -5,12 +5,13 @@
         <span class="detail_title">简介</span>
         <span class="detail_official">官方入驻</span>
       </p>
-      <div v-html="introduction" class="detail_introdcuct"></div>
+      <section v-html="introduction" class="detail-introdcuct fold" ref="introduction"></section>
+      <div class="more" ref="more"><span class="clear" @click="moreIntroduction">更多</span></div>
       <div class="screen_vedio_evaluate_title">
         <p>游戏截图</p>
         <p class="all" @click="checkScreenShot($route.params.id)">全部&nbsp;{{gameData.screenshot}}</p>
       </div>
-      <div class="screen_shot_img">
+      <section class="screen_shot_img">
         <ul>
           <li><img :src="gameData.gameImg" alt=""></li>
           <li><img :src="gameData.gameImg" alt=""></li>
@@ -18,12 +19,12 @@
           <li><img :src="gameData.gameImg" alt=""></li>
           <li><img :src="gameData.gameImg" alt=""></li>
         </ul>
-      </div>
+      </section>
       <div class="screen_vedio_evaluate_title">
         <p>视频</p>
         <p class="all" @click="checkVedio($route.params.id)">全部&nbsp;{{gameData.vedio}}</p>
       </div>
-      <div class="vedio">
+      <section class="vedio">
         <ul class="vedio_ul">
           <li class="vedio_li">
             <img :src="gameData.gameImg" alt="">
@@ -56,12 +57,12 @@
             <p class="play">05-29 | 15555播放</p>
           </li>
         </ul>
-      </div>
+      </section>
       <div class="screen_vedio_evaluate_title">
         <p>评价</p>
         <p class="all" @click="checkAll">全部</p>
       </div>
-      <div class="evaluate">
+      <section class="evaluate">
         <div class="evaluate_item" v-for="item in evaluate" :key="item.id">
           <div class="evaluate_user">
             <img src="/images/1494.png" alt="">
@@ -85,11 +86,11 @@
           <span>查看全部评论</span>
           <i></i>
         </div>
-      </div>
+      </section>
       <div class="screen_vedio_evaluate_title">
         <p>详细信息</p>
       </div>
-      <div class="information">
+      <section class="information">
         <p>简体中文</p>
         <span>语言</span>
         <div class="msg">
@@ -118,12 +119,12 @@
             <span>大小</span>
           </div>
         </div>
-      </div>
+      </section>
     </div>
     <div class="black_line"></div>
-    <div class="detail game_about">
+    <section class="detail game_about">
       <p class="game_about_title">相关游戏</p>
-      <div class="about_item">
+      <section class="about_item">
         <ul>
           <li><img src="/img/benghuai3icon.png" alt=""><p>崩坏学园2</p><span class="start"><i></i></span><span class="score">7.2</span></li>
           <li><img src="/img/benghuai3icon.png" alt=""><p>崩坏学园3</p><span class="start"><i></i></span><span class="score">6.2</span></li>
@@ -136,8 +137,8 @@
           <li><img src="/img/benghuai3icon.png" alt=""><p>崩坏学园2</p><span class="start"><i></i></span><span class="score">6.2</span></li>
           <li><img src="/img/benghuai3icon.png" alt=""><p>崩坏学园2</p><span class="start"><i></i></span><span class="score">6.2</span></li>
         </ul>
-      </div>
-    </div>
+      </section>
+    </section>
   </div>
 </template>
 
@@ -181,6 +182,11 @@ export default {
     // 查看全部视屏
     checkVedio (id) {
       this.$router.push({ path: '/vedio', query: { id: this.gameData.gameid, name: this.gameName } })
+    },
+    // 查看更多介绍
+    moreIntroduction () {
+      this.$refs.introduction.classList.remove('fold')
+      this.$refs.more.style.display = 'none'
     }
   },
   watch: {
@@ -218,10 +224,27 @@ export default {
     line-height: 21px;
     border-radius: 2px;
   }
-  .detail_introdcuct {
+  .detail-introdcuct {
     margin-top: 10px;
     font-size: 14px;
     color: #7B7B7B;
+  }
+  // 折叠效果
+  .fold {
+    height: 115px;
+    overflow: hidden;
+  }
+  .more {
+    font-size: 14px;
+    color: #00E3E3;
+    span {
+      float: right;
+    }
+    &:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
   }
   .screen_vedio_evaluate_title {
     margin-top: 20px;
@@ -326,11 +349,11 @@ export default {
               height: 12px;
             }
             .have_start {
-              background-image: url(/images/start1.png);
+              background-image: url(/font/start1.png);
               background-size: cover;
             }
             .not_start {
-              background-image: url(/images/start.png);
+              background-image: url(/font/start.png);
               background-size: cover;
             }
           }
@@ -362,7 +385,7 @@ export default {
         float: right;
         width: 18px;
         height: 18px;
-        background-image: url(/images/arrowRight.png);
+        background-image: url(/font/arrowRight.png);
         background-size: cover;
       }
     }
@@ -434,7 +457,7 @@ export default {
             display: inline-block;
             width: 10px;
             height: 10px;
-            background-image: url(/images/whitestart.png);
+            background-image: url(/font/whitestart.png);
             background-size: cover;
             // left: 50%;
             // top: 50%;

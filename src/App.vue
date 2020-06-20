@@ -18,7 +18,7 @@ export default {
   *{
    margin: 0 auto;
    padding: 0;
-   max-width: 900px;
+   max-width: 1024px;
   }
   body {
     min-width: 350px;
